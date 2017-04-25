@@ -2,9 +2,8 @@ package main
 
 import (
 	"log"
+	"mycode/trace"
 	"net/http"
-	"os"
-	"trace"
 
 	"github.com/gorilla/websocket"
 )
@@ -24,12 +23,12 @@ type room struct {
 
 // すぐに利用できるチャットルームを生成してreturnする
 func newRoom() *room {
-	r.tracer = trace.New(os.Stdout)
 	return &room{
 		forward: make(chan []byte),
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
+		tracer:  trace.Off(),
 	}
 }
 
