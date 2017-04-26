@@ -31,7 +31,8 @@ func main() {
 	flag.Parse() // フラグを解釈します
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
-	http.Handle("/", &templateHandlar{filename: "chat.html"})
+	http.Handle("/chat", MustAuth(&templateHandlar{filename: "chat.html"}))
+	http.Handle("/login", &templateHandlar{filename: "login.html"})
 	http.Handle("/room", r)
 	go r.run()
 	// Webサーバの開始
